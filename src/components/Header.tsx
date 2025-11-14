@@ -7,10 +7,12 @@ import { Separator } from '@/components/ui/separator';
 import { MenuIcon, XIcon } from 'lucide-react';
 import Logo from '@/components/Logo';
 import Navbar from '@/components/Navbar';
+import useUser from '@/hooks/useUser';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const Header = ({ className, ...props }: React.ComponentProps<'header'>) => {
-
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const user = useUser();
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(true);
 
   return (
     <header
@@ -24,7 +26,29 @@ const Header = ({ className, ...props }: React.ComponentProps<'header'>) => {
         <Logo />
 
         <div className={cn('grow max-md:absolute max-md:top-16 max-md:left-0 max-md:bg-background max-md:w-full max-md:border-b md:flex md:justify-between md:items-center', !mobileMenuOpen && 'max-md:hidden',)}>
-            <Navbar />
+            <Navbar className='max-md:p-3 md:ms-4' />
+
+            {!user && (
+              <>
+                <Separator className='md:hidden' />
+
+                <div className="flex flex-col-reverse gap-y-3 gap-x-2 md:flex-row md:items-center max-md:p-3">
+                  <Button variant={'outline'} asChild>
+                    <Link to={'/login'} viewTransition>Login</Link>
+                  </Button>
+
+                  <Button asChild>
+                    <Link to={'/signup'} viewTransition>Get Started</Link>
+                  </Button>
+                </div>
+              </>
+            )}
+
+            <div className="flex items-center gap-1 ms-auto">
+              <ThemeToggle />
+
+              <UserMenu />
+            </div>
         </div>
       </div>
     </header>
