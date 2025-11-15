@@ -9,6 +9,7 @@ import Logo from '@/components/Logo';
 import Navbar from '@/components/Navbar';
 import useUser from '@/hooks/useUser';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import UserMenu from '@/components/UserMenu';
 
 const Header = ({ className, ...props }: React.ComponentProps<'header'>) => {
     const user = useUser();
