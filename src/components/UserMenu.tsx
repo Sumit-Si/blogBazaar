@@ -20,7 +20,7 @@ const UserMenu = () => {
   const user = useUser();
   const logout = useLogout();
 
-  // if (user) {
+  if (user) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -97,7 +97,7 @@ const UserMenu = () => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-  // }
+  }
 };
 
 export default UserMenu;

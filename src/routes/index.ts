@@ -2,9 +2,12 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "@/pages/auth/Login";
 import Signup from "@/pages/auth/Signup";
 import signupAction from "@/routes/actions/auth/signup";
-import loginAction from "./actions/auth/login";
-import refreshTokenLoader from "./loaders/refreshToken";
+import loginAction from "@/routes/actions/auth/login";
+import refreshTokenLoader from "@/routes/loaders/refreshToken";
+import homeLoader from "@/routes/loaders/user/home";
 import RootLayout from "@/components/layouts/Root";
+import Home from "@/pages/user/Home";
+import settingsAction from "@/routes/actions/user/settings";
 
 
 const router = createBrowserRouter([
@@ -28,6 +31,8 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
+                Component: Home,
+                loader: homeLoader,
             },
             {
                 path: "blogs",
@@ -62,7 +67,8 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: "/settings"
+        path: "/settings",
+        action: settingsAction
     }
 ]);
 

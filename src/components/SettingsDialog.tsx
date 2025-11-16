@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useCallback } from 'react';
 import { useFetcher } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import {
   Dialog,
@@ -29,22 +30,41 @@ import {
 import useUser from '@/hooks/useUser';
 import { AtSignIcon, Loader2Icon, MailIcon } from 'lucide-react';
 import type { DialogProps } from '@/components/ui/dialog';
+import type { ActionResponse } from '@/types';
 
 // Profile Form schemas
 const profileFormSchema = z.object({
-  firstName: z.string().max(20, 'First name must be less than 20 characters'),
-  lastName: z.string().max(20, 'Last name must be less than 20 characters'),
+  firstName: z
+    .string()
+    .max(20, 'First name must be less than 20 characters')
+    .optional(),
+  lastName: z
+    .string()
+    .max(20, 'Last name must be less than 20 characters')
+    .optional(),
   email: z
     .email('Invalid email address')
-    .max(50, 'Email must be less than 50 characters'),
-  username: z.string().max(20, 'Username must be less than 20 characters'),
+    .max(50, 'Email must be less than 50 characters')
+    .optional(),
+  username: z
+    .string()
+    .max(20, 'Username must be less than 20 characters')
+    .optional(),
 });
 
 const ProfileSettingsForm = () => {
   const fetcher = useFetcher();
   const user = useUser();
 
-  const loading = fetcher.state !== 'idle' && Boolean(fetcher.formData);
+  const loading = fetcher.state !== 'idle';
+  const data = fetcher.data as ActionResponse;
+
+  useEffect(() => {
+    if (data && data.ok) {
+      toast.success('Profile has been updated successfully');
+    }
+  }, [data]);
+
   const defaultValues = {
     firstName: '',
     lastName: '',
@@ -62,6 +82,11 @@ const ProfileSettingsForm = () => {
   const onSubmit = useCallback(
     async (values: z.infer<typeof profileFormSchema>) => {
       console.log(values);
+      await fetcher.submit(values, {
+        action: '/settings',
+        method: 'post',
+        encType: 'application/json',
+      });
     },
     [],
   );
@@ -233,8 +258,15 @@ const passwordFormSchema = z
 
 const PasswordSettingsForm = () => {
   const fetcher = useFetcher();
+  const data = fetcher.data as ActionResponse;
 
-  const loading = fetcher.state !== 'idle' && Boolean(fetcher.formData);
+  const loading = fetcher.state !== 'idle';
+
+  useEffect(() => {
+    if (data && data.ok) {
+      toast.success('Password has been updated successfully');
+    }
+  }, [data]);
 
   // React hook form initial
   const form = useForm<z.infer<typeof passwordFormSchema>>({
@@ -252,7 +284,8 @@ const PasswordSettingsForm = () => {
       await fetcher.submit(values, {
         action: '/settings',
         method: 'post',
-      })
+        encType: 'application/json',
+      });
     },
     [],
   );
