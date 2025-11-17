@@ -1,7 +1,7 @@
+import AllBlogs from '@/components/Home/AllBlogs';
 import Hero from '@/components/Home/Hero';
 import RecentBlogs from '@/components/Home/RecentBlogs';
 import Page from '@/components/Page';
-import React from 'react';
 
 const Home = () => {
   return (
@@ -9,6 +9,8 @@ const Home = () => {
     <Hero />
 
     <RecentBlogs />
+
+    <AllBlogs />
   </Page>
   );
 };

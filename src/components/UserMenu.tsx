@@ -21,82 +21,82 @@ const UserMenu = () => {
   const logout = useLogout();
 
   if (user) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          size={'icon'}
-          variant={'ghost'}
-        >
-          <Avatar
-            email={user?.email}
-            size='28'
-            // alt={'S'}
-            className='rounded-sm'
-          />
-        </Button>
-      </DropdownMenuTrigger>
-
-      <DropdownMenuContent
-        className='min-w-56'
-        align='end'
-      >
-        <DropdownMenuLabel className='p-0 font-normal'>
-          <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            size={'icon'}
+            variant={'ghost'}
+          >
             <Avatar
               email={user?.email}
-              size='32'
+              size='28'
               // alt={'S'}
-              className='rounded-lg'
+              className='rounded-sm'
             />
+          </Button>
+        </DropdownMenuTrigger>
 
-            <div className='grid flex-1 text-left text-sm leading-tight'>
-              <div className='truncate font-medium'>{user?.username}</div>
-              <div className='truncate text-xs'>{user?.email}</div>
+        <DropdownMenuContent
+          className='min-w-56'
+          align='end'
+        >
+          <DropdownMenuLabel className='p-0 font-normal'>
+            <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
+              <Avatar
+                email={user?.email}
+                size='32'
+                // alt={'S'}
+                className='rounded-lg'
+              />
+
+              <div className='grid flex-1 text-left text-sm leading-tight'>
+                <div className='truncate font-medium'>{user?.username}</div>
+                <div className='truncate text-xs'>{user?.email}</div>
+              </div>
             </div>
-          </div>
-        </DropdownMenuLabel>
+          </DropdownMenuLabel>
 
-        <DropdownMenuSeparator />
+          <DropdownMenuSeparator />
 
-        <DropdownMenuGroup>
-          {user?.role === 'admin' && (
-            <DropdownMenuItem asChild>
-              <Link
-                to={'/admin/dashboard'}
-                viewTransition
-              >
-                <LayoutDashboardIcon />
-                Dashboard
-              </Link>
-            </DropdownMenuItem>
-          )}
+          <DropdownMenuGroup>
+            {user?.role === 'admin' && (
+              <DropdownMenuItem asChild>
+                <Link
+                  to={'/admin/dashboard'}
+                  viewTransition
+                >
+                  <LayoutDashboardIcon />
+                  Dashboard
+                </Link>
+              </DropdownMenuItem>
+            )}
 
-          <SettingsDialog>
-            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              {/* <Link
+            <SettingsDialog>
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                {/* <Link
                 to={'/admin/dashboard'}
                 viewTransition
               > */}
                 <SettingsIcon />
                 Settings
-              {/* </Link> */}
-            </DropdownMenuItem>
-          </SettingsDialog>
+                {/* </Link> */}
+              </DropdownMenuItem>
+            </SettingsDialog>
 
-          <DropdownMenuItem onClick={logout}>
-            <Link
-              to={'/admin/dashboard'}
-              viewTransition
-            >
-              <LogOutIcon />
-              Logout
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
+            <DropdownMenuItem onClick={logout}>
+              <Link
+                to={'/admin/dashboard'}
+                viewTransition
+              >
+                <LogOutIcon />
+                Logout
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
   }
 };
 

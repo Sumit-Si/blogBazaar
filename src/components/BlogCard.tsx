@@ -1,4 +1,4 @@
-import { Link, Links } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Editor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { formatDistanceToNowStrict } from 'date-fns';
@@ -42,6 +42,13 @@ const BlogCard: React.FC<BlogCardProps> = ({
   className,
   ...props
 }) => {
+  const editor = new Editor({
+    extensions: [StarterKit],
+    content,
+    editable: false,
+    autofocus: false,
+  });
+
   return (
     <Card
       className={cn(
@@ -97,9 +104,29 @@ const BlogCard: React.FC<BlogCardProps> = ({
             size === 'sm' && '@max-2xs:hidden',
           )}
         >
-          {content}
+          {editor.getText()}
         </CardDescription>
       </CardHeader>
+
+      <CardContent className='px-2'>
+        <Link
+          to={`/blogs/${slug}`}
+          viewTransition
+        >
+          <AspectRatio
+            ratio={21 / 9}
+            className='rounded-lg overflow-hidden'
+          >
+            <img
+              src={bannerUrl}
+              width={bannerWidth}
+              height={bannerHeight}
+              className='w-full h-full object-cover'
+              alt={title}
+            />
+          </AspectRatio>
+        </Link>
+      </CardContent>
     </Card>
   );
 };
