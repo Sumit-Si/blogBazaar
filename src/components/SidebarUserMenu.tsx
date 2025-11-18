@@ -17,10 +17,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Avatar from 'react-avatar';
 import SettingsDialog from '@/components/SettingsDialog';
-import { useLogout } from '@/hooks/useLogout';
-import { useUser } from '@/hooks/useUser';
+import useLogout from '@/hooks/useLogout';
+import useUser from '@/hooks/useUser';
 import { ChevronsUpDownIcon, LogOutIcon, SettingsIcon } from 'lucide-react';
-import SidebarUserMenu from '@/components/SidebarUserMenu';
 
 const SidebarUserMenu = () => {
   const { isMobile } = useSidebar();

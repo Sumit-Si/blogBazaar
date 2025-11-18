@@ -13,6 +13,10 @@ import userBlogLoader from "@/routes/loaders/user/blogs";
 import BlogDetail from "@/pages/user/BlogDetail";
 import blogDetailLoader from "./loaders/user/blogDetail";
 import AdminLayout from "@/components/layouts/AdminLayout";
+import adminLoader from "@/routes/loaders/admin/admin";
+import RootErrorBoundary from "@/pages/error/Root";
+import Dashboard from "@/pages/admin/Dashboard";
+import dashboardLoader from "@/routes/loaders/admin/dashboard";
 
 
 const router = createBrowserRouter([
@@ -54,9 +58,13 @@ const router = createBrowserRouter([
     {
         path: "admin",
         Component: AdminLayout,
+        loader: adminLoader,
+        ErrorBoundary: RootErrorBoundary,
         children: [
             {
                 path: "dashboard",
+                Component: Dashboard, 
+                loader: dashboardLoader,
                 handle: {
                     breadcrumb: "Dashboard"
                 },
@@ -75,6 +83,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "blogs/:slug/edit",
+                action: blogEditAction,
                 handle: {
                     breadcrumb: "Edit blog"
                 },
