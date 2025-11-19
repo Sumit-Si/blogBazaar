@@ -1,33 +1,28 @@
-import {redirect} from "react-router-dom"
+import { redirect } from "react-router-dom"
 import blogBazaarApi from "@/api";
 import type { ActionFunction } from "react-router-dom";
 import { AxiosError } from "axios";
 import type { ActionResponse } from "@/types";
 
-const blogEditAction: ActionFunction = async ({request, params}) => {
-    const data = await request.formData();
-    const slug = params.slug;
+const allUserAction: ActionFunction = async ({ request }) => {
+    const data = (await request.json()) as { userId: string };
 
     const accessToken = localStorage.getItem("accessToken");
 
-    if(!accessToken) return redirect('/');
+    if (!accessToken) return redirect('/');
 
     try {
-        const response = await blogBazaarApi.put(`/blogs/${slug}`, data, {
+        await blogBazaarApi.delete(`/users/${data.userId}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
-                'Content-Encoding': 'multipart/form-data',
             },
         });
 
-        const responseData = response.data;
-
         return {
             ok: true,
-            data: responseData,
-        } as ActionResponse;
+        };
     } catch (error) {
-        if(error instanceof AxiosError) {
+        if (error instanceof AxiosError) {
             return {
                 ok: false,
                 error: error.response?.data,
@@ -38,4 +33,4 @@ const blogEditAction: ActionFunction = async ({request, params}) => {
     }
 }
 
-export default blogEditAction;
+export default allUserAction;

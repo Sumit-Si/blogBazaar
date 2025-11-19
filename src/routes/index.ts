@@ -17,6 +17,11 @@ import adminLoader from "@/routes/loaders/admin/admin";
 import RootErrorBoundary from "@/pages/error/Root";
 import Dashboard from "@/pages/admin/Dashboard";
 import dashboardLoader from "@/routes/loaders/admin/dashboard";
+import blogEditAction from "@/routes/actions/admin/blogEdit";
+import blogsAction from "@/routes/actions/admin/blogsAction";
+import allUserAction from "@/routes/actions/admin/user";
+import AdminBlogs from "@/pages/admin/AdminBlogs";
+import allBlogLoader from "@/routes/loaders/admin/blogs";
 
 
 const router = createBrowserRouter([
@@ -71,6 +76,9 @@ const router = createBrowserRouter([
             },
             {
                 path: "blogs",
+                Component: AdminBlogs,
+                loader: allBlogLoader,
+                action: blogsAction,
                 handle: {
                     breadcrumb: "Blogs"
                 },
@@ -96,6 +104,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "users",
+                action: allUserAction,
                 handle: {
                     breadcrumb: "Users"
                 },

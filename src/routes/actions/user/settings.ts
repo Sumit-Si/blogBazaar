@@ -34,6 +34,7 @@ const settingsAction: ActionFunction = async ({request}) => {
                 error: error.response?.data,
             } as ActionResponse;
         }
+        throw error;
     }
 }
 

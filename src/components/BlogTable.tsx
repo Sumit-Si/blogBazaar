@@ -136,15 +136,56 @@ const BlogActionDropdown = ({ blog }: { blog: Blog }) => {
             <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction onClick={() => {
-                    const data = {status: isPublished ? 'draft': 'published'};
+                    const formData = new FormData();
+                    formData.append('status', isPublished ? 'draft': 'published');
 
-                    fetcher.submit(data, {
+                    fetcher.submit(formData, {
                         action: `/admin/blogs/${blog.slug}/edit`,
                         method: 'put',
-                        encType: 'application/json',
+                        encType: 'multipart/form-data',
                     });
                 }}>
                     {isPublished ? 'Unpublish' : 'Publish'}
+                </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        <DropdownMenuSeparator />
+
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <DropdownMenuItem
+              variant='destructive'
+              onSelect={(e) => e.preventDefault()}
+              disabled={isDeleting}
+            >
+              {isDeleting && <Loader2Icon className='animate-spin' />}
+              Delete
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete Blog Post?</AlertDialogTitle>
+
+              <AlertDialogDescription>
+                This action cannot be undone. Are you sure you want to delete this blog post permanently?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+
+            <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={() => {
+                    const data = {blogId: blog._id};
+
+                    fetcher.submit(data, {
+                        action: '/admin/blogs',
+                        method: 'delete',
+                        encType: 'application/json',
+                    });
+                }}>
+                    Delete
                 </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
